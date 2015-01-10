@@ -686,8 +686,8 @@ public class GuiConsole extends GuiScreen implements Runnable {
             resetTabbing();
             // Verifies that the character is in the character set before adding
             if (updateCounter != 0) {
-               if (ConfigHandler.CLOSE_WITH_OPEN_KEY && id == mod_Console.openKey.keyCode) {
-                  mod_Console.closeConsole();
+               if (ConfigHandler.CLOSE_WITH_OPEN_KEY && id == MCConsole.openKey.keyCode) {
+            	   MCConsole.closeConsole();
                   break;
                }
                if (ALLOWED_CHARACTERS.indexOf(key) >= 0 && this.message.length() < ConfigHandler.CHAT_INPUT_LENGTH_MAX && !(message.startsWith("/") && message.length() > ConfigHandler.CHAT_INPUT_LENGTH_SERVER_MAX - 1)) {
@@ -1460,7 +1460,7 @@ public class GuiConsole extends GuiScreen implements Runnable {
       drawRect(maxx / 2, 0, maxx, miny, ConfigHandler.COLOR_BASE);
 
       // Title
-      drawString(this.mc.fontRenderer, TITLE, (maxx / 2) + ConfigHandler.SCREEN_BORDERSIZE, ConfigHandler.SCREEN_BORDERSIZE, ConfigHandler.COLOR_TEXT_TITLE);
+      drawString(this.mc.fontRenderer, MCConsole.MODNAME, (maxx / 2) + ConfigHandler.SCREEN_BORDERSIZE, ConfigHandler.SCREEN_BORDERSIZE, ConfigHandler.COLOR_TEXT_TITLE);
       
       // Options button 
       if(mod_Console.GuiApiInstalled()) {

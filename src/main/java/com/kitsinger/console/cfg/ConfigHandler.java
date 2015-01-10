@@ -1,6 +1,14 @@
 package com.kitsinger.console.cfg;
 
+import static cpw.mods.fml.client.config.ConfigGuiType.BOOLEAN;
+import static cpw.mods.fml.client.config.ConfigGuiType.INTEGER;
+import static cpw.mods.fml.client.config.ConfigGuiType.STRING;
+
+import com.kitsinger.console.cfg.components.GuiEntry;
+import com.kitsinger.console.cfg.components.GuiSection;
+
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -15,7 +23,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
+import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 public class ConfigHandler {
 	
@@ -23,6 +33,7 @@ public class ConfigHandler {
 	public static List<IConfigElement> entryList;
 	
 	public static final String CATEGORY_GEN = "general";
+	public static final String CATEGORY_GEN_langKey = "MCConsole.config.category.general";
 	
    public static int CHAT_INPUT_LENGTH_MAX = 150;                   // Maximum input size on the console
    public static int CHAT_INPUT_LENGTH_SERVER_MAX = 100;            // Maximum server message size - splits the input to this length if it is longer
@@ -40,6 +51,10 @@ public class ConfigHandler {
    public static final boolean SCROLL_TO_BOTTOM_ON_SUBMIT_DEFAULT = true;         // Moves the scroll bar to the bottom when input is sumbitted
    public static boolean CLOSE_WITH_OPEN_KEY;
    public static final boolean CLOSE_WITH_OPEN_KEY_DEFAULT = true;                // Closes the GUI if the open key pressed again
+   
+    public static final String CLOSE_ON_SUBMIT_langKey = "MCConsole.config.general.submitclose";
+	public static final String SCROLL_TO_BOTTOM_ON_SUBMIT_langKey = "MCConsole.config.general.submitscroll";
+	public static final String CLOSE_WITH_OPEN_KEY_langKey = "MCConsole.config.general.opencloses";
 
    public static final byte LOGGING_TRACE  = 8;                      // Logging level - Trace
    public static final byte LOGGING_DEBUG  = 4;                      // Logging level - Debug
@@ -112,7 +127,28 @@ public class ConfigHandler {
 		LOG_DIR = new File(LOG_PATH);
 		CFG_FILE = new File(MOD_DIR.getAbsolutePath() + "/" + MCConsole.MODID + ".cfg");
 		config = new Configuration(CFG_FILE);
+
+		populateEntryList();
+		loadConfig();
+		updateConfig();
 	}
+	
+	public static void populateEntryList()
+	{
+		entryList = new ArrayList<IConfigElement>();
+		
+		List<IConfigElement> genList = new ArrayList<IConfigElement>();
+		
+		genList.add((new GuiEntry<Boolean>("CLOSE_ON_SUBMIT",
+				CLOSE_ON_SUBMIT_DEFAULT, BOOLEAN, CLOSE_ON_SUBMIT_langKey)));
+		genList.add((new GuiEntry<Boolean>("SCROLL_TO_BOTTOM_ON_SUBMIT",
+				SCROLL_TO_BOTTOM_ON_SUBMIT_DEFAULT, BOOLEAN, SCROLL_TO_BOTTOM_ON_SUBMIT_langKey)));
+		genList.add((new GuiEntry<Boolean>("CLOSE_WITH_OPEN_KEY",
+				CLOSE_WITH_OPEN_KEY_DEFAULT, BOOLEAN, CLOSE_WITH_OPEN_KEY_langKey)));
+		
+		entryList.add(new GuiSection(CATEGORY_GEN, CATEGORY_GEN_langKey, genList));
+	}
+	
 	
 	public static void loadConfig()
 	{
@@ -135,17 +171,108 @@ public class ConfigHandler {
 			
 		if (config.hasChanged()) {
 			MCConsole.log.info("Saving configuration");
+			readGui();
 			config.save();
 		}
 		
 	}
 	
+	public static void updateEntries()
+	{
+		for (IConfigElement entrySection : entryList)
+		{
+			/* Right now we only have categories in the entryList
+			switch (entrySection.getType())
+			{
+				case STRING:
+				case BOOLEAN:
+				case COLOR:
+				case MOD_ID:
+				case CONFIG_CATEGORY:
+				case INTEGER:
+				case DOUBLE:
+			} */
+			
+			List<IConfigElement> sectionList = entrySection.getChildElements(); 
+			
+			for (IConfigElement entry : sectionList)
+			{
+				/* We don't have some of these yet */
+				switch (entry.getType())
+				{
+					case MOD_ID:
+					case CONFIG_CATEGORY:
+					case COLOR:
+					case DOUBLE:
+						break;
+					case STRING:
+						entry.set(config.get(entrySection.getName(), entry.getName(), (String) entry.getDefault()).getString());
+						break;
+					case BOOLEAN:
+						entry.set(config.get(entrySection.getName(), entry.getName(), (Boolean) entry.getDefault()).getBoolean((Boolean) entry.getDefault()));
+						break;
+					case INTEGER:
+						entry.set(config.get(entrySection.getName(), entry.getName(), (Integer) entry.getDefault()).getInt());
+						break;
+				}
+			}
+		}
+	}
+	
+	
+	public static void readGui()
+	{
+		for (IConfigElement entrySection : entryList)
+		{
+			/* Right now we only have categories in the entryList
+			switch (entrySection.getType())
+			{
+				case STRING:
+				case BOOLEAN:
+				case COLOR:
+				case MOD_ID:
+				case CONFIG_CATEGORY:
+				case INTEGER:
+				case DOUBLE:
+			} */
+			
+			ConfigCategory cat = config.getCategory(entrySection.getName());
+			
+			List<IConfigElement> sectionList = entrySection.getChildElements();
+			
+			for (IConfigElement entry : sectionList)
+			{
+				/* We don't have some of these yet */
+				Property entryprop = cat.get(entry.getName());
+				switch (entry.getType())
+				{
+					case MOD_ID:
+					case CONFIG_CATEGORY:
+					case COLOR:
+					case DOUBLE:
+						break;
+					case STRING:
+						entryprop.set((String) entry.get());
+						cat.put(entry.getName(), entryprop);
+						break;
+					case BOOLEAN:
+						entryprop.setValue((Boolean) entry.get());
+						cat.put(entry.getName(), entryprop);
+						break;
+					case INTEGER:
+						entryprop.setValue((Integer) entry.get());
+						cat.put(entry.getName(), entryprop);
+						break;
+				}
+			}
+		}
+	}	
+	
 	@SubscribeEvent
 	public void onConfigChanged(OnConfigChangedEvent event)
 	{
-		MCConsole.log.info("OnConfigChangedEvent triggered for " + event.modID);
 		if (event.modID.equals(MCConsole.MODID)) {
-			MCConsole.log.info("Calling updateConfig");
+			readGui();
 			updateConfig();
 		}
 	}
