@@ -21,11 +21,15 @@ package com.kitsinger.console;
 import java.util.Collections;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 
 import org.lwjgl.input.Keyboard;
 
 import com.sijobe.console.GuiConsole;
 import com.vayner.console.guiapi.ConsoleSettings;
+
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 
 @Mod
 (
@@ -43,7 +47,17 @@ public class MCConsole {
     public static final String MODNAME = "Ingame Console";
     public static final String VERSION = "1.3.6.2-ors0";
    
-   public static KeyBinding openKey;
+    public static KeyBinding openKey;
+    
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent event)
+    {    	
+    	// Keybinding
+    	openKey = new KeyBinding("Console", Keyboard.KEY_BACKSLASH, "key.categories.multiplayer");
+    	ClientRegistry.registerKeyBinding(openKey);
+    	
+    }
+    
    private static boolean guiApiInstalled = false;
    private static boolean SPCInstalled = false;
    private static boolean MCP = false;
