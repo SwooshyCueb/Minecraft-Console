@@ -25,6 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 
 import org.lwjgl.input.Keyboard;
+import org.apache.logging.log4j.Logger;
 
 import com.sijobe.console.GuiConsole;
 import com.vayner.console.guiapi.ConsoleSettings;
@@ -55,6 +56,7 @@ public class MCConsole {
     public static ModMetadata modMetadata;
    
     public static KeyBinding openKey;
+    public static Logger log;
     
     @Mod.Instance("MCConsole")
     public static MCConsole instance;
@@ -62,6 +64,8 @@ public class MCConsole {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	log = event.getModLog();
+    	log.info("Starting Minecraft Console");
     	modMetadata = event.getModMetadata();
     	modMetadata.modId		= MODID;
     	modMetadata.name		= MODNAME;
