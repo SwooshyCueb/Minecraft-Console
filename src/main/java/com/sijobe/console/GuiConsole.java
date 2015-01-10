@@ -77,7 +77,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
  *                DONE: p1 - Fix message splitting incorrectly
  *                FIXME:p2 - Add option for 1 tick unpause - pause for singleplayer.
  *
- * @author simo_415, tellefma.
+ * @author simo_415, tellefma, SwooshyCueb
  *
  *         This program is free software: you can redistribute it and/or modify
  *         it under the terms of the GNU Lesser General Public License as published by
