@@ -1,0 +1,18 @@
+MCConsole.config.category.general=General Settings
+MCConsole.config.category.general.tooltip=General configuration options for the Ingame Console
+MCConsole.config.category.chat=Chat Settings
+MCConsole.config.category.chat.tooltip=Settings related to chat messages
+MCConsole.config.category.geometry=Geometry Settings
+MCConsole.config.category.geometry.tooltip=Console UI geometry settings
+
+MCConsole.config.chat.maxinput=Maximum input size on the console
+MCConsole.config.chat.maxserver=Maximum server message size
+MCConsole.config.chat.maxhistory=Maximum size of stored input history
+MCConsole.config.chat.maxoutput=Maximum number of lines in the output
+MCConsole.config.chat.printinput=Print input
+MCConsole.config.chat.printoutput=Print output
+MCConsole.config.chat.inputprefix=Prompt/Input prefix
+
+MCConsole.config.general.submitclose=Close on submit
+MCConsole.config.general.submitscroll=Scroll to bottom on submit
+MCConsole.config.general.opencloses=Open keybind closes
