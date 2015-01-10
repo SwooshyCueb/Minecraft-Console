@@ -211,10 +211,13 @@ build.gradle
 MinecraftForge-License.txt
 MinecraftForge-Credits.txt
 LICENSE-fml.txt
+CREDITS-fml.txt
 gradle/
+gradle
 build/
 .gradle/
 hs_err_pid*.log
+README.txt
 
 
 ##########
