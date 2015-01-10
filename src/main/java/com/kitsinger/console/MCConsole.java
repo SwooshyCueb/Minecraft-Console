@@ -102,6 +102,6 @@ public class MCConsole {
    }
    
    public String getVersion() {
-      return GuiConsole.VERSION;
+      return MCConsole.VERSION;
    }      
 }
