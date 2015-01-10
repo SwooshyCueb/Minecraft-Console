@@ -29,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.sijobe.console.GuiConsole;
 import com.vayner.console.guiapi.ConsoleSettings;
+import com.kitsinger.console.cfg.ConfigHandler;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModMetadata;
@@ -45,6 +46,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 	version						= MCConsole.VERSION,
 	acceptedMinecraftVersions	= "[1.7.10,1.8,1.8.0,1.8.1,)",
 	dependencies				= "required-after:Forge@[10.13.2.1240,)",
+	guiFactory 					= "com.kitsinger.console.cfg.ConfigGuiFactory",
 	canBeDeactivated 			= false // We'll change this to true once we know how to handle it
 )
 
@@ -76,6 +78,8 @@ public class MCConsole {
     	modMetadata.authorList	= Arrays.asList (new String[] { "simo_415", "Vayner", "tellefma", "SwooshyCueb" });
     	//modMetadata.credits		= "";
     	//modMetadata.logoFile    = "/logo.png";
+    	
+    	ConfigHandler.initConfig(event);
     }
     
     @Mod.EventHandler

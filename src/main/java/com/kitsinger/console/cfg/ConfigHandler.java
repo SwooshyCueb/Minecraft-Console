@@ -1,13 +1,23 @@
 package com.kitsinger.console.cfg;
 
 import java.io.File;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.lwjgl.input.Keyboard;
 
+import com.kitsinger.console.MCConsole;
+
+import cpw.mods.fml.client.config.IConfigElement;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.config.Configuration;
 
 public class ConfigHandler {
+	
+	public static Configuration config;
+	public static List<IConfigElement> entryList;
 	
    public static int CHAT_INPUT_LENGTH_MAX = 150;                   // Maximum input size on the console
    public static int CHAT_INPUT_LENGTH_SERVER_MAX = 100;            // Maximum server message size - splits the input to this length if it is longer
@@ -68,18 +78,31 @@ public class ConfigHandler {
 
    public static boolean MISC_PASUE_GAME = true;                    // Game is pasued or not when the ocnsole is open
    
-   public static final String MOD_PATH = "mods/console/";           // Relative location of the mod directory
-   public static String LOG_PATH = "mods/console/logs";             // Relative location of the console logs
+   public static String MOD_PATH;                                   // Location of the mod directory
+   public static String LOG_PATH;                                   // Location of the console logs
    
-   public static File MOD_DIR = new File(Minecraft.getMinecraftDir(), MOD_PATH);    // Mod directory
-   public static File LOG_DIR = new File(Minecraft.getMinecraftDir(), LOG_PATH);   // Log directory
-   public static File GUI_SETTINGS_FILE = new File(MOD_DIR, "gui.properties");
-   public static File GUI_SETTINGS_DEFAULT_FILE = new File(MOD_DIR, "gui-default.properties");
+   public static File MOD_DIR;                                      // Mod directory
+   public static File LOG_DIR;                                      // Log directory
+   public static File CFG_FILE;
+   
+   // Eventually we're going to get rid of these.
+   public static File GUI_SETTINGS_FILE;// = new File(MOD_DIR, "gui.properties");
+   public static File GUI_SETTINGS_DEFAULT_FILE;// = new File(MOD_DIR, "gui-default.properties");
 
    public static boolean EMACS_KEYS = false;                        // Use emacs keybindings
    
    public static int KEY_AUTOCOMPLETE = Keyboard.KEY_TAB;           // Autocomlete keybinding
    public static int KEY_AUTOPREV = Keyboard.KEY_LEFT;              // Next match
    public static int KEY_AUTONEXT = Keyboard.KEY_RIGHT;             // Previous match
+   
+	public static void initConfig(FMLPreInitializationEvent event)
+	{
+		FMLCommonHandler.instance().bus().register(new ConfigHandler());
+		MOD_DIR = new File(event.getModConfigurationDirectory().getParent() + "/" + MCConsole.MODID);
+		MOD_PATH = MOD_DIR.getAbsolutePath();
+		LOG_PATH = MOD_PATH + "/logs";
+		LOG_DIR = new File(LOG_PATH);
+		CFG_FILE = new File(MOD_DIR.getAbsolutePath() + "/" + MCConsole.MODID + ".cfg");
+	}
    
 }
