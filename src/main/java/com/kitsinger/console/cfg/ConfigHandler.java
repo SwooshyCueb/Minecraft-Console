@@ -12,12 +12,15 @@ import cpw.mods.fml.client.config.IConfigElement;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigHandler {
 	
 	public static Configuration config;
 	public static List<IConfigElement> entryList;
+	
+	public static final String CATEGORY_GEN = "general";
 	
    public static int CHAT_INPUT_LENGTH_MAX = 150;                   // Maximum input size on the console
    public static int CHAT_INPUT_LENGTH_SERVER_MAX = 100;            // Maximum server message size - splits the input to this length if it is longer
@@ -29,9 +32,12 @@ public class ConfigHandler {
    public static boolean CHAT_PRINT_OUTPUT = true;                  // Prints the output
    public static String CHAT_INPUT_PREFIX = "> ";                   // Prefix for all input messages
    
-   public static boolean CLOSE_ON_SUBMIT = false;                   // Closes the GUI after the input has been submit
-   public static boolean SCROLL_TO_BOTTOM_ON_SUBMIT = true;         // Moves the scroll bar to the bottom when input is sumbitted
-   public static boolean CLOSE_WITH_OPEN_KEY = true;                // Closes the GUI if the open key pressed again
+   public static boolean CLOSE_ON_SUBMIT;
+   public static final boolean CLOSE_ON_SUBMIT_DEFAULT = false;                   // Closes the GUI after the input has been submit
+   public static boolean SCROLL_TO_BOTTOM_ON_SUBMIT;
+   public static final boolean SCROLL_TO_BOTTOM_ON_SUBMIT_DEFAULT = true;         // Moves the scroll bar to the bottom when input is sumbitted
+   public static boolean CLOSE_WITH_OPEN_KEY;
+   public static final boolean CLOSE_WITH_OPEN_KEY_DEFAULT = true;                // Closes the GUI if the open key pressed again
 
    public static final byte LOGGING_TRACE  = 8;                      // Logging level - Trace
    public static final byte LOGGING_DEBUG  = 4;                      // Logging level - Debug
@@ -103,6 +109,34 @@ public class ConfigHandler {
 		LOG_PATH = MOD_PATH + "/logs";
 		LOG_DIR = new File(LOG_PATH);
 		CFG_FILE = new File(MOD_DIR.getAbsolutePath() + "/" + MCConsole.MODID + ".cfg");
+		config = new Configuration(CFG_FILE);
 	}
+	
+	public static void loadConfig()
+	{
+		try {
+			MCConsole.log.info("Loading configuration");
+			config.load();
+		} catch (Exception e) {
+			MCConsole.log.warn("Could not load configuration. Usually a restart will fix this.");
+		}
+	}
+	
+	public static void updateConfig()
+	{		
+		CLOSE_ON_SUBMIT = config.get(CATEGORY_GEN, "CLOSE_ON_SUBMIT",
+				CLOSE_ON_SUBMIT_DEFAULT).getBoolean(CLOSE_ON_SUBMIT_DEFAULT);
+		SCROLL_TO_BOTTOM_ON_SUBMIT = config.get(CATEGORY_GEN, "SCROLL_TO_BOTTOM_ON_SUBMIT",
+				SCROLL_TO_BOTTOM_ON_SUBMIT_DEFAULT).getBoolean(SCROLL_TO_BOTTOM_ON_SUBMIT_DEFAULT);
+		CLOSE_WITH_OPEN_KEY = config.get(CATEGORY_GEN, "CLOSE_WITH_OPEN_KEY",
+				CLOSE_WITH_OPEN_KEY_DEFAULT).getBoolean(CLOSE_WITH_OPEN_KEY_DEFAULT);
+			
+		if (config.hasChanged()) {
+			MCConsole.log.info("Saving configuration");
+			config.save();
+		}
+		
+	}
+	
    
 }
