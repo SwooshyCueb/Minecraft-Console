@@ -161,13 +161,17 @@ public class ConfigHandler {
 	}
 	
 	public static void updateConfig()
-	{		
+	{
+		config.addCustomCategoryComment(CATEGORY_GEN, I18n.format(CATEGORY_GEN_langKey + ".tooltip"));
+		
 		CLOSE_ON_SUBMIT = config.get(CATEGORY_GEN, "CLOSE_ON_SUBMIT",
 				CLOSE_ON_SUBMIT_DEFAULT).getBoolean(CLOSE_ON_SUBMIT_DEFAULT);
 		SCROLL_TO_BOTTOM_ON_SUBMIT = config.get(CATEGORY_GEN, "SCROLL_TO_BOTTOM_ON_SUBMIT",
 				SCROLL_TO_BOTTOM_ON_SUBMIT_DEFAULT).getBoolean(SCROLL_TO_BOTTOM_ON_SUBMIT_DEFAULT);
 		CLOSE_WITH_OPEN_KEY = config.get(CATEGORY_GEN, "CLOSE_WITH_OPEN_KEY",
 				CLOSE_WITH_OPEN_KEY_DEFAULT).getBoolean(CLOSE_WITH_OPEN_KEY_DEFAULT);
+		
+		updateEntries();
 			
 		if (config.hasChanged()) {
 			MCConsole.log.info("Saving configuration");
