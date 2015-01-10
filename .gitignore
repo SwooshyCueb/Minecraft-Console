@@ -198,3 +198,27 @@ updatemd5.bat
 updatemd5.sh
 updatenames.bat
 updatenames.sh
+
+
+##########
+## Forge
+##########
+
+gradlew
+gradlew.bat
+forge-*-*-changelog.txt
+build.gradle
+MinecraftForge-License.txt
+MinecraftForge-Credits.txt
+LICENSE-fml.txt
+gradle/
+build/
+.gradle/
+hs_err_pid*.log
+
+
+##########
+## Junk
+##########
+
+bak/
