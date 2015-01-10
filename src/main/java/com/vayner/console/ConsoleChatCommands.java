@@ -15,8 +15,9 @@ import java.util.List;
 
 import com.sijobe.console.ConsoleListener;
 import com.sijobe.console.GuiConsole;
-
 import com.kitsinger.console.MCConsole;
+
+import cpw.mods.fml.common.FMLCommonHandler;
 
 /**
  *
@@ -112,7 +113,8 @@ public class ConsoleChatCommands implements ConsoleListener{
       } catch (FileNotFoundException e) {
          System.out.println("[MCC] " + commandFile.getPath() + " can't be found");
       } catch (IOException e) {
-         ModLoader.throwException("[MCC] IOException when reading / opening file", e);
+         //ModLoader.throwException("[MCC] IOException when reading / opening file", e);
+         FMLCommonHandler.instance().raiseException(e, "[MCC] IOException when reading / opening file", true);
       }
 
       Collections.sort(commandList);
@@ -140,20 +142,21 @@ public class ConsoleChatCommands implements ConsoleListener{
          
       } catch (FileNotFoundException e){
       } catch (IOException e) {
-         ModLoader.throwException("[MCC] IOException when saving file", e);
+         //ModLoader.throwException("[MCC] IOException when saving file", e);
+         FMLCommonHandler.instance().raiseException(e, "[MCC] IOException when saving file", true);
       }
 
    }
 
    @Override
    public boolean processInput(String input) {
-      if(MCConsole.MCPtesting() && input.equals("servername")){
+      /*if(MCConsole.MCPtesting() && input.equals("servername")){
          System.out.println("Server name:" + GuiConsole.getInstance().getServerName());
          System.out.println("Server IP:" + GuiConsole.getInstance().getServerIp());
          GuiConsole.getInstance().addOutputMessage("Server name:" + GuiConsole.getInstance().getServerName());
          GuiConsole.getInstance().addOutputMessage("Server IP:" + GuiConsole.getInstance().getServerIp());
          return false;
-      }
+      }*/
       return true;
    }
    

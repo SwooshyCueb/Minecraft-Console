@@ -1,6 +1,7 @@
 package com.vayner.console.external;
 
 import javax.swing.JFrame;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -8,25 +9,31 @@ import java.awt.GridBagLayout;
 import java.awt.RenderingHints.Key;
 
 import javax.swing.JTextField;
+
 import java.awt.GridBagConstraints;
+
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
-
-import net.minecraft.src.ModLoader;
 
 import org.lwjgl.input.Keyboard;
 
 import com.sijobe.console.GuiConsole;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+
 import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+
 import java.awt.Dialog.ModalExclusionType;
+
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -110,7 +117,8 @@ public class ExternalConsoleWindow extends JFrame {
             doc.insertString(doc.getLength(), message + "\n", null);
       } catch (BadLocationException e) {
          System.out.println("[MCC] Something has gone horrobly wrong with the external console, more spesificly 'reciveMessage'");
-         ModLoader.throwException("Something has gone horrobly wrong with the external console, more spesificly 'reciveMessage'", e);
+         //ModLoader.throwException("Something has gone horrobly wrong with the external console, more spesificly 'reciveMessage'", e);
+         FMLCommonHandler.instance().raiseException(e, "Something has gone horrobly wrong with the external console, more spesificly 'reciveMessage'", true);
       }
       
       scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());

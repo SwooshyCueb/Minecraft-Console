@@ -5,16 +5,19 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.GuiPlayerInfo;
-import net.minecraft.src.NetClientHandler;
+import net.minecraft.client.network.NetHandlerPlayClient;
 
 
 public class WordListFetcher {
    
    static Pattern playerNamePattern = Pattern.compile("[\\[[\\{[\\(]]]+?.*?[\\][\\}[\\)]]]"); //Get rid of everything between the brackets (), [], or {}
-   static Minecraft mcRef = ModLoader.getMinecraftInstance();
+   //static Minecraft mcRef = ModLoader.getMinecraftInstance();
+   //static Minecraft mcRef = Minecraft.getMinecraft();
+   static Minecraft mcRef = FMLClientHandler.instance().getClient();
    
    /**
     * Fetches the current word list, can include playernames 
@@ -44,7 +47,7 @@ public class WordListFetcher {
    static public List<String> getPlayerNames() {
       List<String> names = new ArrayList<String>();
       if (!mcRef.isSingleplayer() && mcRef.thePlayer instanceof EntityClientPlayerMP) {
-         NetClientHandler netclienthandler = ((EntityClientPlayerMP) mcRef.thePlayer).sendQueue;
+         NetHandlerPlayClient netclienthandler = ((EntityClientPlayerMP) mcRef.thePlayer).sendQueue;
          List<GuiPlayerInfo> tempList = netclienthandler.playerInfoList;
          for (GuiPlayerInfo info : (List<GuiPlayerInfo>) tempList) {
             String name = info.name; 
@@ -68,7 +71,7 @@ public class WordListFetcher {
             }
          }
       } else {
-         names.add(mcRef.session.username);
+         names.add(mcRef.getSession().getUsername());
       }
       return names;
    }

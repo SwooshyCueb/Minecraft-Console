@@ -23,21 +23,33 @@ import java.util.Collections;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraftforge.event.ServerChatEvent;
 
 import org.lwjgl.input.Keyboard;
 import org.apache.logging.log4j.Logger;
 
+
+
+
+
+
+
 //import com.sijobe.console.GuiConsole;
 //import com.vayner.console.guiapi.ConsoleSettings;
 import com.kitsinger.console.cfg.ConfigHandler;
+import com.sijobe.console.GuiConsole;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 @Mod
 (
@@ -92,12 +104,23 @@ public class MCConsole {
     	ClientRegistry.registerKeyBinding(openKey);
     	
     }
-   
-   /*@Override
-   public void keyboardEvent(KeyBinding event) {
-      if(event.keyCode == openKey.keyCode)
-         openConsole();
-   } */
+    
+    /**
+     * Passes on messages received from the server
+     */
+    @Mod.EventHandler
+    public void serverChat(ServerChatEvent event)
+    {
+    	GuiConsole.getInstance().addServerMessage(event);
+    }
+    
+    //@Mod.EventHandler
+    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+    public void keypress(KeyInputEvent event)
+    {
+    	if (openKey.isPressed())
+    		openConsole();
+    }
    
    /**
     * Passes on messages sent by the client
@@ -107,27 +130,25 @@ public class MCConsole {
       GuiConsole.getInstance().addClientMessage(var1);
 	} */
    
-   /**
-    * Passes on messages received from the server
-    */
-   /* @Override
-   public void serverChat(NetServerHandler var1, String var2) {
-      GuiConsole.getInstance().addServerMessage(var1, var2);
-   } */
-   
-   /* public static void openConsole() {
-      Minecraft game = ModLoader.getMinecraftInstance();
+   public static void openConsole() {
+      //Minecraft game = ModLoader.getMinecraftInstance();
+	  Minecraft game = FMLClientHandler.instance().getClient();
+      //Minecraft game = Minecraft.getMinecraft();
       if(game.currentScreen == null) {
-         game.displayGuiScreen(GuiConsole.getInstance());
+         //game.displayGuiScreen(GuiConsole.getInstance());
+         FMLClientHandler.instance().showGuiScreen(GuiConsole.getInstance());
       }
    }
    
    public static void closeConsole() {
-      Minecraft game = ModLoader.getMinecraftInstance();
+      //Minecraft game = ModLoader.getMinecraftInstance();
+	  Minecraft game = FMLClientHandler.instance().getClient();
+	  //Minecraft game = Minecraft.getMinecraft();
       if(game.currentScreen.equals(GuiConsole.getInstance())) {
-         game.displayGuiScreen(null);
+         //game.displayGuiScreen(null);
+         FMLClientHandler.instance().showGuiScreen(null);
       }
-   } */
+   }
    
    public String getVersion() {
       return VERSION;
