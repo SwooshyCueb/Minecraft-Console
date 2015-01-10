@@ -61,7 +61,7 @@ public class MCConsole {
     	
     }
    
-   public mod_Console() {
+   /* public mod_Console() {
       GuiConsole.getInstance();
    }
    
@@ -69,25 +69,25 @@ public class MCConsole {
    public void keyboardEvent(KeyBinding event) {
       if(event.keyCode == openKey.keyCode)
          openConsole();
-   }
+   } */
    
    /**
     * Passes on messages sent by the client
     */
-   @Override
+   /* @Override
    public void clientChat(String var1) {
       GuiConsole.getInstance().addClientMessage(var1);
-	}
+	} */
    
    /**
     * Passes on messages received from the server
     */
-   @Override
+   /* @Override
    public void serverChat(NetServerHandler var1, String var2) {
       GuiConsole.getInstance().addServerMessage(var1, var2);
-   }
+   } */
    
-   public static void openConsole() {
+   /* public static void openConsole() {
       Minecraft game = ModLoader.getMinecraftInstance();
       if(game.currentScreen == null) {
          game.displayGuiScreen(GuiConsole.getInstance());
@@ -99,7 +99,7 @@ public class MCConsole {
       if(game.currentScreen.equals(GuiConsole.getInstance())) {
          game.displayGuiScreen(null);
       }
-   }
+   } */
    
    public String getVersion() {
       return MCConsole.VERSION;
