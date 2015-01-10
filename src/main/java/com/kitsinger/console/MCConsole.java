@@ -63,8 +63,6 @@ public class MCConsole {
    
    public mod_Console() {
       GuiConsole.getInstance();
-      openKey = new KeyBinding("Console", Keyboard.KEY_BACKSLASH);
-      ModLoader.registerKey(this, openKey, false);
    }
    
    @Override
