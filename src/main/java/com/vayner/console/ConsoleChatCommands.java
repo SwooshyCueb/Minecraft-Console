@@ -16,8 +16,7 @@ import java.util.List;
 import com.sijobe.console.ConsoleListener;
 import com.sijobe.console.GuiConsole;
 
-import net.minecraft.src.ModLoader;
-import net.minecraft.src.mod_Console;
+import com.kitsinger.console.MCConsole;
 
 /**
  *
@@ -148,7 +147,7 @@ public class ConsoleChatCommands implements ConsoleListener{
 
    @Override
    public boolean processInput(String input) {
-      if(mod_Console.MCPtesting() && input.equals("servername")){
+      if(MCConsole.MCPtesting() && input.equals("servername")){
          System.out.println("Server name:" + GuiConsole.getInstance().getServerName());
          System.out.println("Server IP:" + GuiConsole.getInstance().getServerIp());
          GuiConsole.getInstance().addOutputMessage("Server name:" + GuiConsole.getInstance().getServerName());

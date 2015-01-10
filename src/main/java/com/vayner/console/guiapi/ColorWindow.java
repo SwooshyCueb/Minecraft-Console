@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-import net.minecraft.src.GuiApiHelper;
+/* import net.minecraft.src.GuiApiHelper;
 import net.minecraft.src.GuiModScreen;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.ModSettingScreen;
@@ -16,7 +16,7 @@ import de.matthiasmann.twl.ColorSelector;
 import de.matthiasmann.twl.ListBox;
 import de.matthiasmann.twl.ListBox.CallbackReason;
 import de.matthiasmann.twl.model.ColorSpaceHSL;
-import de.matthiasmann.twl.model.SimpleListModel;
+import de.matthiasmann.twl.model.SimpleListModel; */
 
 
 public class ColorWindow extends BaseConsoleSettingsWindow {

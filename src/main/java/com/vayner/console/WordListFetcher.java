@@ -6,9 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.EntityClientPlayerMP;
-import net.minecraft.src.GuiPlayerInfo;
-import net.minecraft.src.ModLoader;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.gui.GuiPlayerInfo;
 import net.minecraft.src.NetClientHandler;
 
 

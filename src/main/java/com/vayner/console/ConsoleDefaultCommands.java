@@ -10,7 +10,7 @@ import net.minecraft.src.PlayerHelper;
 import net.minecraft.src.SPCPlugin;
 import net.minecraft.src.SPCPluginManager;
 import net.minecraft.src.spc_AprilFools2012;*/
-import net.minecraft.src.mod_Console;
+import com.kitsinger.console.MCConsole;
 
 /**
  *

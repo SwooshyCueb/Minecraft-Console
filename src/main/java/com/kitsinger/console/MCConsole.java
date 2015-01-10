@@ -27,8 +27,8 @@ import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
 import org.apache.logging.log4j.Logger;
 
-import com.sijobe.console.GuiConsole;
-import com.vayner.console.guiapi.ConsoleSettings;
+//import com.sijobe.console.GuiConsole;
+//import com.vayner.console.guiapi.ConsoleSettings;
 import com.kitsinger.console.cfg.ConfigHandler;
 
 import cpw.mods.fml.common.FMLCommonHandler;
