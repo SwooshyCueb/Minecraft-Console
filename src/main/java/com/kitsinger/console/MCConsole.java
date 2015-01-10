@@ -28,6 +28,7 @@ import org.lwjgl.input.Keyboard;
 import com.sijobe.console.GuiConsole;
 import com.vayner.console.guiapi.ConsoleSettings;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -52,20 +53,21 @@ public class MCConsole {
    
     public static KeyBinding openKey;
     
+    @Mod.Instance("MCConsole")
+    public static MCConsole instance;
+    
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
-    {    	
+    {
+    	FMLCommonHandler.instance().bus().register(instance);
+    	
     	// Keybinding
     	openKey = new KeyBinding("Console", Keyboard.KEY_BACKSLASH, "key.categories.multiplayer");
     	ClientRegistry.registerKeyBinding(openKey);
     	
     }
    
-   /* public mod_Console() {
-      GuiConsole.getInstance();
-   }
-   
-   @Override
+   /*@Override
    public void keyboardEvent(KeyBinding event) {
       if(event.keyCode == openKey.keyCode)
          openConsole();
