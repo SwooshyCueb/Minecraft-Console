@@ -9,8 +9,10 @@ import org.lwjgl.input.Keyboard;
 import com.kitsinger.console.MCConsole;
 
 import cpw.mods.fml.client.config.IConfigElement;
+import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.config.Configuration;
@@ -138,5 +140,13 @@ public class ConfigHandler {
 		
 	}
 	
-   
+	@SubscribeEvent
+	public void onConfigChanged(OnConfigChangedEvent event)
+	{
+		MCConsole.log.info("OnConfigChangedEvent triggered for " + event.modID);
+		if (event.modID.equals(MCConsole.MODID)) {
+			MCConsole.log.info("Calling updateConfig");
+			updateConfig();
+		}
+	}
 }
