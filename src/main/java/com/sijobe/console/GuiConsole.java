@@ -26,19 +26,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.ChatAllowedCharacters;
-import net.minecraft.src.ChatLine;
-import net.minecraft.src.EntityClientPlayerMP;
-import net.minecraft.src.FontRenderer;
-import net.minecraft.src.GuiIngame;
+import net.minecraft.util.ChatAllowedCharacters;
+import net.minecraft.client.gui.ChatLine;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiIngame;
 
-import net.minecraft.src.GuiPlayerInfo;
-import net.minecraft.src.GuiScreen;
-import net.minecraft.src.KeyBinding;
-import net.minecraft.src.ModLoader;
-import net.minecraft.src.NetClientHandler;
-import net.minecraft.src.NetServerHandler;
-import net.minecraft.src.mod_Console;
+import net.minecraft.client.gui.GuiPlayerInfo;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.settings.KeyBinding;
+
+import com.kitsinger.console.MCConsole;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -47,7 +45,7 @@ import org.lwjgl.opengl.GL11;
 import com.vayner.console.ConsoleChatCommands;
 import com.vayner.console.external.ExternalGuiConsole;
 
-import net.minecraft.src.GuiModScreen;
+//import net.minecraft.src.GuiModScreen;
 import com.vayner.console.guiapi.ConsoleSettings;
 
 /**
