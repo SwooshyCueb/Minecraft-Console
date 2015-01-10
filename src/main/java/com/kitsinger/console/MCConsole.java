@@ -1,8 +1,8 @@
-package net.minecraft.src;
+package com.kitsinger.console;
 
 /**
  * 
- * @author simo_415, Vayner
+ * @author simo_415, Vayner, SwooshyCueb
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,21 @@ import org.lwjgl.input.Keyboard;
 import com.sijobe.console.GuiConsole;
 import com.vayner.console.guiapi.ConsoleSettings;
 
-public class mod_Console extends BaseMod {
+@Mod
+(
+	modid						= MCConsole.MODID,
+	name						= MCConsole.MODNAME,
+	version						= MCConsole.VERSION,
+	acceptedMinecraftVersions	= "[1.7.10,1.8,1.8.0,1.8.1,)",
+	dependencies				= "required-after:Forge@[10.13.2.1240,)",
+	canBeDeactivated 			= false // We'll change this to true once we know how to handle it
+)
+
+public class MCConsole {
+	
+	public static final String MODID = "MCConsole";
+    public static final String MODNAME = "Ingame Console";
+    public static final String VERSION = "1.3.6.2-ors0";
    
    public static KeyBinding openKey;
    private static boolean guiApiInstalled = false;
