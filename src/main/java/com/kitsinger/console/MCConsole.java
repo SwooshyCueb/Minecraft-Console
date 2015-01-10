@@ -60,10 +60,6 @@ public class MCConsole {
     	ClientRegistry.registerKeyBinding(openKey);
     	
     }
-    
-   private static boolean guiApiInstalled = false;
-   private static boolean SPCInstalled = false;
-   private static boolean MCP = false;
    
    public mod_Console() {
       GuiConsole.getInstance();
@@ -75,47 +71,6 @@ public class MCConsole {
    public void keyboardEvent(KeyBinding event) {
       if(event.keyCode == openKey.keyCode)
          openConsole();
-   }
-   
-   @Override
-   public void load() {
-      String playername = ModLoader.getMinecraftInstance().session.username;
-      GuiConsole.getInstance();
-      if(playername.equals("MCPTEST")) {
-         System.out.println("[MCC] Username is MCPTEST, assuming running via eclipse with all prerequisits installed");
-         SPCInstalled = true;
-         guiApiInstalled = true;
-         MCP = true;
-         return;
-      } else if (playername.equals("GUIAPI")) {
-         System.out.println("[MCC] Username is GUIAPI, assuming running via eclipse with ModLoader and GuiApi installed");
-         SPCInstalled = false;
-         guiApiInstalled = true;
-         MCP = true;
-         return;
-      } else if (playername.equals("MODLOADER")) {
-         System.out.println("[MCC] Username is MODLOADER, assuming running via eclipse with only ModLoader installed");
-         SPCInstalled = false;
-         guiApiInstalled = false;
-         MCP = true;
-         return;
-      }
-      
-      try {
-         Class helper = Class.forName("PlayerHelper");
-         SPCInstalled = true;
-      } catch (ClassNotFoundException e) {
-         System.out.println("[MCC] Single Player Commands 'PlayerHelper.class' not found, unable to retrive commands for SPC");
-         SPCInstalled = false;
-      }
-      
-      try {
-         Class test = Class.forName("ModSettings");
-         guiApiInstalled = true;
-      } catch (ClassNotFoundException e) {
-         System.out.println("[MCC] GuiApi not installed, settings adjustment ingame will not be avaiable");
-         guiApiInstalled = false;
-      }
    }
    
    /**
@@ -146,23 +101,6 @@ public class MCConsole {
       if(game.currentScreen.equals(GuiConsole.getInstance())) {
          game.displayGuiScreen(null);
       }
-   }
-   
-   public void modsLoaded() {
-      if(guiApiInstalled)
-         ConsoleSettings.init();
-   }
-   
-   public static boolean GuiApiInstalled() {
-      return guiApiInstalled;
-   }
-   
-   public static boolean SPCInstalled() {
-      return SPCInstalled;
-   }
-   
-   public static boolean MCPtesting() {
-      return MCP;
    }
    
    public String getVersion() {
