@@ -220,7 +220,7 @@ public class ConsoleSettingCommands implements ConsoleListener {
    }
 
    public static void save(){
-      GuiConsole.writeGuiConsoleSettings();
+      
    }
 
    @Override

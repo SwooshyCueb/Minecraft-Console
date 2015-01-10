@@ -165,14 +165,6 @@ public class GuiConsole extends GuiScreen implements Runnable {
       if(!ConfigHandler.LOG_DIR.exists())
     	  ConfigHandler.LOG_DIR.mkdirs();
       
-      if (!ConfigHandler.GUI_SETTINGS_DEFAULT_FILE.exists())
-         writeSettings(GuiConsole.class, ConfigHandler.GUI_SETTINGS_DEFAULT_FILE);
-      
-      if (ConfigHandler.GUI_SETTINGS_FILE.exists())
-         readSettings(GuiConsole.class, ConfigHandler.GUI_SETTINGS_FILE);
-      
-      writeSettings(GuiConsole.class, ConfigHandler.GUI_SETTINGS_FILE);
-      
       ALLOWED_CHARACTERS = String.valueOf(ChatAllowedCharacters.allowedCharacters);
       MESSAGES = new Vector<String>();
       MESSAGES.add("\2476[MCC] Minecraft Console version: \2473" + MCConsole.VERSION + "\2476 for Minecraft version: \24731.4.4");
@@ -2151,17 +2143,5 @@ public class GuiConsole extends GuiScreen implements Runnable {
          e.printStackTrace();
       }
       return fields;
-   }
-   
-   public static void readGuiConsoleSettings() {
-      readSettings(GuiConsole.class, ConfigHandler.GUI_SETTINGS_FILE);
-   }
-   
-   public static void writeGuiConsoleSettings() {
-      writeSettings(GuiConsole.class, ConfigHandler.GUI_SETTINGS_FILE);
-   }
-   
-   public static void resetGuiConsoleSettings() {
-      writeSettings(GuiConsole.class, ConfigHandler.GUI_SETTINGS_DEFAULT_FILE);
    }
 }
